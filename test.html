@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>Testing class</title>
+    
+  
+    <script type="module">
+        import {LayoutUtil} from './src/layout.js';
+        import {LocalDataReader} from './src/data_util.js';
+        import {MonitorContext, Monitor, MonitorControler, DataConsumer} from './src/monitor.js';
+        window.LayoutUtil = LayoutUtil;   
+        window.LocalDataReader = LocalDataReader;
+        window.MonitorContext = MonitorContext;
+        window.Monitor = Monitor; 
+        window.MonitorControler = MonitorControler;       
+        window.DataConsumer = DataConsumer;
+    </script>
+
+    <script>
+        function main() {
+            // LayoutUtil.addMonitor('');   
+            var controller =  new MonitorControler();         
+            var monitor = new Monitor(new MonitorContext('Patient 1', ['ecg', 'spo2']));    
+            var reader = new LocalDataReader('./data/data1s.json', monitor);    
+            monitor.registerReader(reader); 
+            controller.addMonitor(monitor);
+            // start a specific
+            controller.monitors[0].start();
+        }
+    </script>
+    
+   
+</head> 
+<body onload="main()">
+    <div id="container" style="width: 900; height: 600px; margin: auto;">
+    </div>
+</body>   
+</html>
